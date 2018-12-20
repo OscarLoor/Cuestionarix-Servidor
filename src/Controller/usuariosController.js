@@ -62,7 +62,7 @@ exports.mostrarUsuarios = function(req, res){
             if(err){
                 res.status(400).send({ error:true, message: err });
             }else{
-                res.status(200).send({ error:true, message: resultado });
+                res.status(200).send({ error:false, message: resultado });
             }
         });
         
