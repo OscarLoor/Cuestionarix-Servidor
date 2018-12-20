@@ -11,7 +11,7 @@ Configurar el archivo src/Model/db.js con la configuracion de la base de datos, 
 -Crear tabla: integrae_cuestionarix
 -Crear usuario: integrae_cuestio
 -Contraseña: QJn&hh{Xx{W4
--Importar SQL para generar tabla
+-Importar SQL para generar tabla (Archivo sql dentro de la raiz del proyecto - integrae-cuestionarix.sql)
 
 ---------------------------
 Ejecutar servidor
