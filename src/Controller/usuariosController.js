@@ -16,7 +16,13 @@ exports.crearUsuario = function(req, res){
     // 3) Guardo en la base de datos enviando el objeto de la clase
     UsuarioModelo.crear(nuevoUsuario, function(err, resultado){
         if(err){
-            res.status(400).send({ error:true, message: err });
+            
+            if(err ="ER_DUP_ENTRY"){
+                res.status(400).send({ error:true, message: "Ya existe un usuario con ese correo" });
+            }else{
+                res.status(400).send({ error:true, message: err });
+            }
+            
         }else{
             res.status(200).send({ error:false, message: 'Ingresado correctamente' });
         }
@@ -32,23 +38,11 @@ exports.authUsuario = function(req, res){
     //Si estan correctos
     var datosRecibidos = req.body;
 
-    UsuarioModelo.buscarPorEmail(datosRecibidos.email, function(err, resultado){
+    UsuarioModelo.ingresoPorEmail(datosRecibidos.email, datosRecibidos.password, function(err, resultado){
         if(err){
             res.status(400).send({ error:true, message: err });
         }else{
-            //Verifico que el usuario ingreso la clave correctamente, comparando con el guardado en BD
-            if(resultado == datosRecibidos.password){
-                //Si esta correcto necesito generar un token para permitir el acceso a rutas con autenticacion
-
-                //En este caso quemare un token generado por mi
-                //correctamente necesitaria generar algo como JWT
-                tokenParaAcceder = "rutasSecretas";
-
-                //Devuelvo que esta correcto
-                res.status(200).send({ error:false, message: 'Autenticacion realizada correctamente', token: tokenParaAcceder});
-            }else{
-                res.status(400).send({ error:true, message: 'Contraseña incorrecta' });
-            }
+            res.status(200).send({ error:false, message: 'Ingreso correcto', token: resultado });
         }
         
     });

@@ -32,10 +32,10 @@ UsuarioModelo.crear = function(usuarioRecibido, result){
     })
 }
 
-UsuarioModelo.buscarPorEmail = function(emailRecibido, result){
+UsuarioModelo.ingresoPorEmail = function(emailRecibido, passwordRecibido, result){
     
      
-    sql.query("Select password from Usuarios where email = ? ", emailRecibido, function(err, res){
+    sql.query("Select password, id from Usuarios where email = ? ", emailRecibido, function(err, res){
         if(err) {
             console.log("Error al buscar un usuario: "+ err);
             result(err, null);
@@ -44,8 +44,43 @@ UsuarioModelo.buscarPorEmail = function(emailRecibido, result){
                 //Si no encuentra el email ingresado
                 result("No se encontro", null);
             }else{
-                //Si encuentra el usuario devuelvo el password
-                result(null, res[0].password);
+                //Verifico que el usuario ingreso la clave correctamente, comparando con el guardado en BD
+                if(res[0].password == passwordRecibido){
+                    //Adicional tengo que registrar la hora del ingreso
+                    var fechaUltimoAcceso = new Date();
+                    var query = "Update Usuarios set fechaUltimoAcceso = ? where id = ?";
+                    var arregloDatosNuevos = [
+                        fechaUltimoAcceso,
+                        res[0].id
+                    ];
+                    
+                    sql.query(query, arregloDatosNuevos, function(err, res){
+                        if(err) {
+                            console.log(err);
+                            console.log("Error al actualizar fecha de ingreso"+ err.code);
+                            result(err.code, null);
+                        }else{
+                            if(res.affectedRows != 0){
+                                console.log("Se modifico el usuario: ");
+                                //Si esta correcto necesito generar un token para permitir el acceso a rutas con autenticacion
+
+                                //En este caso quemare un token generado por mi
+                                //correctamente necesitaria generar algo como JWT
+                                tokenParaAcceder = "rutasSecretas";
+                                //Devuelvo que esta correcto
+                                result(null, tokenParaAcceder);
+                            }else{
+                                console.log("No se modifico el registro");
+                                result("No se modifico el registro", null);
+                            }
+                            
+                        }
+                    })
+                    
+    
+                }else{
+                    result("Contraseña incorrecta", null);
+                }
             }            
         }
     })
