@@ -67,8 +67,13 @@ UsuarioModelo.ingresoPorEmail = function(emailRecibido, passwordRecibido, result
                                 //En este caso quemare un token generado por mi
                                 //correctamente necesitaria generar algo como JWT
                                 tokenParaAcceder = "rutasSecretas";
+                                respuestaObtenida = [
+                                    token = tokenParaAcceder,
+                                    idUsuario = arregloDatosNuevos[1]
+                                ];
+                                
                                 //Devuelvo que esta correcto
-                                result(null, tokenParaAcceder);
+                                result(null, respuestaObtenida);
                             }else{
                                 console.log("No se modifico el registro");
                                 result("No se modifico el registro", null);
