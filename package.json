@@ -1,0 +1,24 @@
+{
+  "name": "cuestionarix-servidor",
+  "version": "1.0.0",
+  "description": "Servidor para reto Cuestionarix",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OscarLoor/Cuestionarix-Servidor.git"
+  },
+  "author": "Oscar Loor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OscarLoor/Cuestionarix-Servidor/issues"
+  },
+  "homepage": "https://github.com/OscarLoor/Cuestionarix-Servidor#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  }
+}
