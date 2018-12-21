@@ -176,9 +176,9 @@ UsuarioModelo.actualizar = function(usuarioRecibido, result){
 }
 
 
-UsuarioModelo.eliminar = function(idUsuario, result){
-    if(!esAdministrador(idUsuario)){
-        sql.query("DELETE FROM Usuarios WHERE id = ?", [idUsuario], function (err, res) {
+UsuarioModelo.eliminar = function(idUsuarioPorEliminar, idUsuarioSolicitante, result){
+    if(!esAdministrador(idUsuarioPorEliminar) || idUsuarioPorEliminar == idUsuarioSolicitante){
+        sql.query("DELETE FROM Usuarios WHERE id = ?", [idUsuarioPorEliminar], function (err, res) {
 
             if(err) {
                 console.log(err);

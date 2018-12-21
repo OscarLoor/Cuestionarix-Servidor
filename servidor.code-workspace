@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "E:\\Github\\Cuestionarix\\Cuestionarix-Cliente"
 		}
 	]
 }

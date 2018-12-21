@@ -7,10 +7,14 @@ var routesCreadas = function(app){
     
     app.route('/mostrarUsuarios')
         .post(UsuarioController.mostrarUsuarios) //Envio token y id de usuario, es POST para poder enviar token y el id
+    
+    app.route('/borrarUsuario')
+        .post(UsuarioController.eliminarUsuario); //Envio el id del usuario a eliminar
+        
     app.route('/usuarios')
         .post(UsuarioController.crearUsuario) //Envio datos de usuario
         .put(UsuarioController.modificarUsuario) //Envio datos de usuario
-        .delete(UsuarioController.eliminarUsuario); //Envio el id del usuario a eliminar
+        
 }
 
 module.exports = routesCreadas;

@@ -118,12 +118,12 @@ exports.eliminarUsuario = function(req, res){
 
         //Si estan correctos
         // 1) Creo el objeto con los datos recibidos
-        var idRecibido = req.body.id;
+        var idPorBorrar = req.body.idPorBorrar;
         
         // 2) Verifico que no existe el email en la base de datos
 
         // 3) Guardo en la base de datos enviando el objeto de la clase
-        UsuarioModelo.eliminar(idRecibido, function(err, resultado){
+        UsuarioModelo.eliminar(idPorBorrar, idRecibido, function(err, resultado){
             if(err){
                 res.status(400).send({ error:true, message: err });
             }else{
