@@ -98,6 +98,28 @@ esAdministrador = function(idRecibido){
         return false;
     }
 }
+
+UsuarioModelo.buscarPorID = function(id, result){
+    var query = "Select id, nombres, apellidos, cedula, email, password from Usuarios where id = ?";
+    var arregloDatosNuevos = [
+        id
+    ];
+    
+    sql.query(query, arregloDatosNuevos, function(err, res){
+        if(err) {
+            console.log("Error al buscar el usuario: "+ err);
+            result(err, null);
+        }else{
+            if(res[0] == undefined){
+                //Si no encuentra el email ingresado
+                result("No se encontro", null);
+            }else{
+                result(null, res[0]);   
+            }            
+        }
+    })
+}
+
 UsuarioModelo.mostrarTodos = function(idRecibido, result){
     
      
@@ -135,9 +157,9 @@ UsuarioModelo.mostrarTodos = function(idRecibido, result){
     })
 }
 
-UsuarioModelo.actualizar = function(usuarioRecibido, result){
+UsuarioModelo.actualizar = function(usuarioRecibido, idUsuarioSolicitante,result){
     //Verifico que no sea un administrador
-    if(!esAdministrador(usuarioRecibido.id)){
+    if(!esAdministrador(usuarioRecibido.id) || idUsuarioSolicitante == usuarioRecibido.id){
         //Obtengo la fecha de creacion y le asigno al usuario
         usuarioRecibido.fechaActualizacion = new Date();
         var query = "Update Usuarios set nombres = ?, apellidos = ?, cedula = ?, password = ?, email = ?, fechaActualizacion = ? where id = ?";

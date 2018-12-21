@@ -10,10 +10,16 @@ var routesCreadas = function(app){
     
     app.route('/borrarUsuario')
         .post(UsuarioController.eliminarUsuario); //Envio el id del usuario a eliminar
+
+    app.route('/buscarPorID')
+    .post(UsuarioController.buscarPorID); //Envio el id del usuario a eliminar
         
     app.route('/usuarios')
         .post(UsuarioController.crearUsuario) //Envio datos de usuario
-        .put(UsuarioController.modificarUsuario) //Envio datos de usuario
+
+    app.route('/modificarUsuario')
+        .post(UsuarioController.modificarUsuario) //Envio datos de usuario
+        
         
 }
 

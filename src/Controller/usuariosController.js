@@ -74,8 +74,33 @@ exports.mostrarUsuarios = function(req, res){
 /**
  * Acceso no publico
  */
+
+ exports.buscarPorID = function(req, res){
+    var datosRecibidos = req.body;
+    var idRecibido = datosRecibidos.id;
+    var tokenRecibido = datosRecibidos.token;
+    var idParaBuscar = datosRecibidos.idParaBuscar;
+    if("rutasSecretas" == tokenRecibido){
+        //Tengo acceso
+        
+        UsuarioModelo.buscarPorID(idParaBuscar, function(err, resultado){
+            if(err){
+                res.status(400).send({ error:true, message: err });
+            }else{
+                res.status(200).send({ error:false, message: resultado });
+            }
+        });
+        
+    }else{
+        //No tengo acceso
+        res.status(400).send({ error:true, message: 'Acceso no permitido' });
+    }
+ }
+/**
+ * Acceso no publico
+ */
 exports.modificarUsuario = function(req, res){
-    var idRecibido = req.body.id;
+    var idRecibido = req.body.idUsuarioSolicitante;
     var tokenRecibido = req.body.token;
     if("rutasSecretas" == tokenRecibido){
         //Tengo acceso
@@ -89,7 +114,7 @@ exports.modificarUsuario = function(req, res){
         // 2) Verifico que no existe el email en la base de datos
 
         // 3) Guardo en la base de datos enviando el objeto de la clase
-        UsuarioModelo.actualizar(usuarioAnterior, function(err, resultado){
+        UsuarioModelo.actualizar(usuarioAnterior, idRecibido, function(err, resultado){
             if(err){
                 res.status(400).send({ error:true, message: err });
             }else{
